@@ -17,6 +17,8 @@ Core Modules:
 ### Version 2: Microservices
 Distributed microservices architecture where each module operates as an independent service, coordinated through an API Gateway (YARP).
 
+![Microservices Architecture Diagram](Resources/Diagram.png)
+
 ## Key Features
 
 ### User Administration
