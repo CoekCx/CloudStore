@@ -1,4 +1,5 @@
 ﻿using CloudStore.BE.UserAdministration.Domain.Enums;
+using Common.Constants;
 
 namespace CloudStore.BE.UserAdministration.Domain.Entities;
 
@@ -38,7 +39,7 @@ public sealed class User
             CreatedAt = DateTime.UtcNow,
             Plan = UserPlan.Free,
             StorageUsed = 0,
-            StorageLimit = 1024 * 1024 * 1024 // 1GB for free users
+            StorageLimit = StorageConstants.FreePlanStorageLimit
         };
     }
 
@@ -74,6 +75,6 @@ public sealed class User
     public void UpgradeToPremium()
     {
         Plan = UserPlan.Premium;
-        StorageLimit = 10L * 1024 * 1024 * 1024; // 10GB for premium users
+        StorageLimit = StorageConstants.PremiumPlanStorageLimit;
     }
 }
