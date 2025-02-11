@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserAdministration", "UserA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.BE.UserAdministration.Domain", "src\modules\UserAdministration\CloudStore.BE.UserAdministration.Domain\CloudStore.BE.UserAdministration.Domain.csproj", "{388C3196-9CD8-4B3A-A8AB-A5686450371B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{8744DFB3-3BAB-4453-8E0E-2AA5E6968EEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{8744DFB3-3BAB-4453-8E0E-2AA5E6968EEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
