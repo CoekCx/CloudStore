@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.BE.Api", "CloudStore.BE.Api\CloudStore.BE.Api.csproj", "{AECDC3FA-7647-411D-B9A6-0DA573131ED2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E40FFBB4-E1BA-4ABE-ABAA-218E687EC6B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{07E9E873-3BA4-4C8B-AC93-0CF3517CFED2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AECDC3FA-7647-411D-B9A6-0DA573131ED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AECDC3FA-7647-411D-B9A6-0DA573131ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AECDC3FA-7647-411D-B9A6-0DA573131ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AECDC3FA-7647-411D-B9A6-0DA573131ED2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AECDC3FA-7647-411D-B9A6-0DA573131ED2} = {E40FFBB4-E1BA-4ABE-ABAA-218E687EC6B2}
+		{07E9E873-3BA4-4C8B-AC93-0CF3517CFED2} = {E40FFBB4-E1BA-4ABE-ABAA-218E687EC6B2}
+	EndGlobalSection
+EndGlobal
