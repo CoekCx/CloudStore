@@ -398,4 +398,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/CloudStore.BE/.idea/.idea.CloudStore.BE/.idea
+**/.idea/*
+
