@@ -16,9 +16,9 @@ public class DeleteUserEndpoint : ICarterModule
                 {
                     var command = new DeleteUserCommand(id);
 
-                    var isSuccessful = await sender.Send(command, cancellationToken);
+                    await sender.Send(command, cancellationToken);
 
-                    return isSuccessful ? Results.NoContent() : Results.NotFound();
+                    return Results.NoContent();
                 })
             .WithName("DeleteUserEndpoint")
             .WithDisplayName("Delete User")

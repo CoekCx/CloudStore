@@ -1,7 +1,9 @@
 using Common.Abstractions.Contracts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using UserAdministration.Business.Abstractions;
 using UserAdministration.Domain.Entities;
+using UserAdministration.Domain.Exceptions;
 
 namespace UserAdministration.Business.Users.Create;
 
@@ -10,7 +12,16 @@ public sealed class CreateUserCommandHandler(IApplicationDbContext context, IPas
 {
     public async Task<EntityCreatedResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = User.Create(request.Email, request.FirstName, request.LastName);
+        var user = await context.Users.FirstOrDefaultAsync(
+            x => x.Email == request.Email,
+            cancellationToken: cancellationToken)!;
+
+        if (user is not null)
+        {
+            throw new UserEmailAlreadyExists(request.Email);
+        }
+
+        user = User.Create(request.Email, request.FirstName, request.LastName);
 
         var passwordHash = passwordHasher.HashPassword(user.Id, request.Password);
 

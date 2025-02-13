@@ -24,5 +24,7 @@ public sealed record Error(int Code, string Description)
 
     public static Error UserEmailNotVerified => new(104, "User email not verified");
 
+    public static Error UserEmailAlreadyExists => new(105, "User with that email already exists");
+
     #endregion
 }

@@ -8,6 +8,6 @@ public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
     {
         RuleFor(x => x.UserId)
             .NotEmpty()
-            .WithMessage("UserId cannot be empty");
+            .WithMessage("UserId cannot be empty.");
     }
 }

@@ -29,6 +29,12 @@ public class User
         IsEmailVerified = true;
     }
 
+    public void Update(string firstName, string lastName)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+    }
+
     public void UpdatePasswordHash(string passwordHash)
     {
         if (!string.IsNullOrWhiteSpace(passwordHash))

@@ -4,9 +4,9 @@ using UserAdministration.Domain.Exceptions;
 
 namespace UserAdministration.Business.Users.Delete;
 
-public class DeleteUserCommandHandler(IApplicationDbContext context) : IRequestHandler<DeleteUserCommand, bool>
+public class DeleteUserCommandHandler(IApplicationDbContext context) : IRequestHandler<DeleteUserCommand, Unit>
 {
-    public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         var user = await context.Users.FindAsync(keyValues: [request.UserId], cancellationToken: cancellationToken);
 
@@ -18,6 +18,6 @@ public class DeleteUserCommandHandler(IApplicationDbContext context) : IRequestH
         context.Users.Remove(user);
         await context.SaveChangesAsync(cancellationToken);
 
-        return true;
+        return Unit.Value;
     }
 }
