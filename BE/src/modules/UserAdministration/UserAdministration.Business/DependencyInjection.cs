@@ -2,6 +2,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using UserAdministration.Business.Behaviors;
+using Mapster;
 
 namespace UserAdministration.Business;
 
@@ -18,6 +19,8 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(assembly);
+
+        TypeAdapterConfig.GlobalSettings.Scan(assembly);
 
         return services;
     }
