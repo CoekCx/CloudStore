@@ -13,6 +13,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required.")
             .NotNull().WithMessage("Password is null.")
+            .MinimumLength(4).WithMessage("Password must be at least 4 characters.")
             .MaximumLength(50).WithMessage("Password length exceeded.");
 
         RuleFor(x => x.FirstName)

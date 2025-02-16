@@ -14,6 +14,8 @@ public sealed record Error(int Code, string Description)
 
     public static Error Conflict => new(4, "Conflict");
 
+    public static Error Unauthorized => new(5, "Unauthorized");
+
     #endregion
 
     #region Users
