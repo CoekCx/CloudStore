@@ -1,174 +1,132 @@
 # CloudStore - Cloud Storage Solution
 
-CloudStore is a Google Drive-like cloud storage solution built with .NET, implementing both modular monolith and microservices architectures. The application allows users to store, organize, and manage their files in the cloud with real-time notifications and email updates.
+CloudStore is a Google Drive-like cloud storage solution built with .NET 8, implementing Clean Architecture principles. The application allows users to store, organize, and manage their files in the cloud with real-time notifications and email updates.
 
-## Architecture
+## Architecture Overview
 
-The application is developed in two versions:
+### Clean Architecture Implementation
+CloudStore follows Clean Architecture principles, ensuring:
+- Independence of frameworks
+- Testability
+- Independence of UI
+- Independence of Database
+- Independence of external services
 
-### Version 1: Modular Monolith
-A modular monolithic application with clear boundaries between modules, using MassTransit and RabbitMQ for internal communication.
+### Project Structure
+```
+src/
+├── CloudStore.Domain/           # Enterprise Business Rules
+├── CloudStore.Application/      # Application Business Rules
+├── CloudStore.Infrastructure/   # External Concerns
+├── CloudStore.Persistence/      # Data Access
+├── CloudStore.Presentation/     # API Controllers & DTOs
+└── CloudStore.Api/             # Application Entry Point
+```
 
-Core Modules:
-- User Administration (Authentication, Authorization, User Management)
-- Storage (File Management, AWS S3 Integration)
-- Notifications (Email Services, Real-time Updates)
+### Layer Dependencies
+- Domain: No dependencies
+- Application: Depends on Domain
+- Infrastructure: Depends on Application
+- Persistence: Depends on Application
+- Presentation: Depends on Application
+- API: Depends on all layers
 
-### Version 2: Microservices
-Distributed microservices architecture where each module operates as an independent service, coordinated through an API Gateway (YARP).
+### Layer Responsibilities
 
-![Microservices Architecture Diagram](Resources/Diagram.png)
+#### Domain Layer
+- Core business entities
+- Value objects
+- Domain events
+- Domain exceptions
+- Core interfaces
 
-## Key Features
+#### Application Layer
+- Command/Query handlers (CQRS with MediatR)
+- Domain event handlers
+- Application DTOs
+- Interface definitions for infrastructure
+- Business logic validators
+- Application services interfaces
 
-### User Administration
-- User registration and authentication using JWT
-- Account management (CRUD operations)
-- Future support for free/premium plans
+#### Infrastructure Layer
+- AWS S3 implementation
+- SendGrid email service
+- JWT authentication
+- SignalR notifications
+- External service implementations
+
+#### Persistence Layer
+- Database context
+- Entity configurations
+- Migrations
+- Read/Write repositories
+- Query specifications
+
+#### Presentation Layer
+- API controllers
+- Request/Response DTOs
+- API-specific mapping profiles
+- Route configurations
+- API documentation
+- Request validators
+
+#### API Layer
+- Application bootstrapping
+- Dependency injection
+- Middleware configuration
+- Application configuration
+
+## Technical Stack & Patterns
+
+### Core Technologies
+- .NET 8
+- PostgreSQL
+- AWS S3
+- SendGrid
+- SignalR
+
+### Packages & Patterns
+- MediatR (CQRS & Event Handling)
+- Entity Framework Core (Data Access)
+- FluentValidation (Validation)
+- Mapster (Object Mapping)
+- JWT Authentication
+- Swagger/OpenAPI (API Documentation)
+
+## V1 Features
+
+### User Management
+- User registration
+- JWT-based authentication
+- Profile management (update details)
+- Password reset functionality
+
+### File Management
+- File upload (with progress tracking)
+- File download
+- File deletion
+- Basic file metadata
+- Folder creation and management
+- Basic file hierarchy
 
 ### Storage
-- AWS S3 integration for file storage
-- Folder/file structure management
-- Support for large file uploads
-- Presigned URL generation for secure file access
-- Data sharding capabilities
+- AWS S3 integration
+- Large file support
+- Secure file access via presigned URLs
 
 ### Notifications
-- Email notifications via SendGrid
+- Real-time upload/download status (SignalR)
+- Email notifications for:
   - Account verification
   - Password reset
-  - Storage capacity warnings
-- Real-time notifications via SignalR
-  - File upload status
-  - File download status
-  - File/folder modification updates
-
-## Technical Stack
-
-- **.NET 8**: Core framework
-- **YARP**: API Gateway (Version 2)
-- **RabbitMQ**: Message broker
-- **MassTransit**: Message bus abstraction
-- **AWS S3**: File storage
-- **SendGrid**: Email service
-- **SignalR**: Real-time communications
-- **Docker**: Containerization
-- **JWT**: Authentication
-
-## Project Structure
-
-### Version 1 (Modular Monolith)
-```
-BE/
-├── src/
-│   ├── Modules/
-│   │   ├── UserAdministration/
-│   │   ├── Storage/
-│   │   └── Notifications/
-│   └── Api/
-│       └── Program.cs
-└── tests/
-```
-
-### Version 2 (Microservices)
-```
-BE/
-├── src/
-│   ├── Modules/
-│   │   ├── UserAdministration/
-│   │   │   └── Program.cs
-│   │   ├── Storage/
-│   │   │   └── Program.cs
-│   │   └── Notifications/
-│   │       └── Program.cs
-│   └── Gateway/
-└── tests/
-```
+  - Storage warnings
+- Real-time file operation notifications
 
 ## Getting Started
 
 ### Prerequisites
 - .NET 8 SDK
-- Docker and Docker Compose
+- PostgreSQL
 - AWS Account with S3 access
 - SendGrid Account
-
-### Development Environment Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/CoekCx/CloudStore.git
-cd Cloudstore
-cd BE
-```
-
-2. Run Docker Compose to start required services:
-```bash
-docker-compose up -d
-```
-
-This will start:
-- RabbitMQ
-- Other required infrastructure services
-
-3. Configure environment variables:
-```bash
-cp .env.example .env
-```
-
-Edit the `.env` file with your:
-- AWS credentials
-- SendGrid API key
-- Other required secrets
-
-### Running the Application
-
-#### Version 1 (Modular Monolith)
-```bash
-cd src/Api
-dotnet run
-```
-
-#### Version 2 (Microservices)
-1. Start the Gateway:
-```bash
-cd src/Gateway
-dotnet run
-```
-
-2. Start each service:
-```bash
-cd src/Modules/UserAdministration
-dotnet run
-
-cd src/Modules/Storage
-dotnet run
-
-cd src/Modules/Notifications
-dotnet run
-```
-
-## Event Flow
-
-### User Administration Events
-- `UserRegistered` → Notifications (Email Verification)
-- `PasswordResetRequested` → Notifications (Reset Email)
-
-### Storage Events
-- `FileUploaded` → Notifications (Real-time + Email if space low)
-- `FileDownloaded` → Notifications (Real-time)
-- `FileModified` → Notifications (Real-time)
-
-## Future Enhancements
-
-- File sharing capabilities between users
-- Premium user plans with extended features
-- Integration with external identity providers
-
-## Docker Support
-
-The application uses Docker for containerization of both the application and its dependencies. Configuration is provided via `docker-compose.yml` for local development and separate Dockerfile for each service in the microservices version.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+- Docker (optional)
