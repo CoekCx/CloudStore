@@ -11,9 +11,8 @@ public class UserWriteRepository(ApplicationDbContext context) : WriteRepository
 {
     public async Task UpdatePasswordHashAsync(Guid userId, string newPasswordHash, CancellationToken cancellationToken)
     {
-        var user = await DbSet.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
-
-        if (user == null) throw new UserNotFoundException(userId);
+        var user = await DbSet.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
+                   ?? throw new UserNotFoundException(userId);
 
         user.PasswordHash = newPasswordHash;
         await UpdateAsync(user, cancellationToken);
@@ -25,9 +24,8 @@ public class UserWriteRepository(ApplicationDbContext context) : WriteRepository
         string lastName,
         CancellationToken cancellationToken)
     {
-        var user = await DbSet.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
-
-        if (user == null) throw new UserNotFoundException(userId);
+        var user = await DbSet.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
+                   ?? throw new UserNotFoundException(userId);
 
         user.FirstName = firstName;
         user.LastName = lastName;

@@ -13,7 +13,6 @@ public class WriteRepository<TEntity>(ApplicationDbContext context) : IWriteRepo
     public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
     {
         var entry = await DbSet.AddAsync(entity, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
         return entry.Entity;
     }
 
@@ -23,16 +22,16 @@ public class WriteRepository<TEntity>(ApplicationDbContext context) : IWriteRepo
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+    public virtual Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         DbSet.Update(entity);
-        await context.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public virtual async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+    public virtual Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
     {
         DbSet.Remove(entity);
-        await context.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
     public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
