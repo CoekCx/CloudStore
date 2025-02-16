@@ -1,8 +1,56 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4261EC64-77FC-4D3F-A2FC-9DD5596C8041}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.Domain", "src\CloudStore.Domain\CloudStore.Domain.csproj", "{99C11004-4E34-4FA1-B3B3-2331A8F39AF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.Persistence", "src\CloudStore.Persistence\CloudStore.Persistence.csproj", "{90576CEE-840D-4409-9529-E44A3CDDB5E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.Application", "src\CloudStore.Application\CloudStore.Application.csproj", "{D57F944F-9F83-448D-B949-1BC6B8272628}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.Infrastructure", "src\CloudStore.Infrastructure\CloudStore.Infrastructure.csproj", "{3E854898-35DF-411D-BF1F-1B2E026949DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.Presentation", "src\CloudStore.Presentation\CloudStore.Presentation.csproj", "{8AEED1B5-A1F2-47AC-A5CF-DDD291C97CFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStore.Api", "src\CloudStore.Api\CloudStore.Api.csproj", "{85A5FF1F-1C88-46E1-8369-FC7471AB2BFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99C11004-4E34-4FA1-B3B3-2331A8F39AF2} = {4261EC64-77FC-4D3F-A2FC-9DD5596C8041}
+		{90576CEE-840D-4409-9529-E44A3CDDB5E0} = {4261EC64-77FC-4D3F-A2FC-9DD5596C8041}
+		{D57F944F-9F83-448D-B949-1BC6B8272628} = {4261EC64-77FC-4D3F-A2FC-9DD5596C8041}
+		{3E854898-35DF-411D-BF1F-1B2E026949DE} = {4261EC64-77FC-4D3F-A2FC-9DD5596C8041}
+		{8AEED1B5-A1F2-47AC-A5CF-DDD291C97CFE} = {4261EC64-77FC-4D3F-A2FC-9DD5596C8041}
+		{85A5FF1F-1C88-46E1-8369-FC7471AB2BFC} = {4261EC64-77FC-4D3F-A2FC-9DD5596C8041}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99C11004-4E34-4FA1-B3B3-2331A8F39AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99C11004-4E34-4FA1-B3B3-2331A8F39AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99C11004-4E34-4FA1-B3B3-2331A8F39AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99C11004-4E34-4FA1-B3B3-2331A8F39AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90576CEE-840D-4409-9529-E44A3CDDB5E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90576CEE-840D-4409-9529-E44A3CDDB5E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90576CEE-840D-4409-9529-E44A3CDDB5E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90576CEE-840D-4409-9529-E44A3CDDB5E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D57F944F-9F83-448D-B949-1BC6B8272628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57F944F-9F83-448D-B949-1BC6B8272628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57F944F-9F83-448D-B949-1BC6B8272628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57F944F-9F83-448D-B949-1BC6B8272628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E854898-35DF-411D-BF1F-1B2E026949DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E854898-35DF-411D-BF1F-1B2E026949DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E854898-35DF-411D-BF1F-1B2E026949DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E854898-35DF-411D-BF1F-1B2E026949DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AEED1B5-A1F2-47AC-A5CF-DDD291C97CFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AEED1B5-A1F2-47AC-A5CF-DDD291C97CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AEED1B5-A1F2-47AC-A5CF-DDD291C97CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AEED1B5-A1F2-47AC-A5CF-DDD291C97CFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85A5FF1F-1C88-46E1-8369-FC7471AB2BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85A5FF1F-1C88-46E1-8369-FC7471AB2BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85A5FF1F-1C88-46E1-8369-FC7471AB2BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85A5FF1F-1C88-46E1-8369-FC7471AB2BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
