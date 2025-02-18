@@ -11,7 +11,9 @@ public class File : BaseEntity
     {
         Id = Guid.NewGuid();
         ParentDirectory = parentDirectory;
+        ParentDirectoryId = parentDirectory.Id;
         Owner = owner;
+        OwnerId = owner.Id;
         Url = url;
         Name = name;
         Extension = extension;
@@ -31,6 +33,10 @@ public class File : BaseEntity
     public DateTime CreatedOnUtc { get; private set; }
 
     public DateTime? ModifiedOnUtc { get; private set; }
+
+    // Foreign keys
+    public Guid ParentDirectoryId { get; set; }
+    public Guid OwnerId { get; set; }
 
     // Navigation properties
     public Directory ParentDirectory { get; private set; }

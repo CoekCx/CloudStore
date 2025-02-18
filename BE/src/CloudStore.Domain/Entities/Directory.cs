@@ -4,23 +4,25 @@ public class Directory : BaseEntity
 {
     protected Directory()
     {
+        Id = Guid.NewGuid();
         Subdirectories = [];
         Files = [];
     }
 
-    public Directory(Directory? parentDirectory, string name, User owner) : this()
+    public Directory(Guid? parentDirectoryId, string name, Guid ownerId) : this()
     {
-        Id = Guid.NewGuid();
         Name = name;
-        ParentDirectory = parentDirectory;
-        Owner = owner;
+        ParentDirectoryId = parentDirectoryId;
+        OwnerId = ownerId;
     }
 
     public string Name { get; set; }
 
+    // Foreign keys
+    public Guid OwnerId { get; set; }
+    public Guid? ParentDirectoryId { get; set; }
+
     // Navigation properties
-    public Directory? ParentDirectory { get; private set; }
     public ICollection<Directory> Subdirectories { get; private set; }
     public ICollection<File> Files { get; private set; }
-    public User Owner { get; private set; }
 }
