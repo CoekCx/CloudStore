@@ -1,4 +1,6 @@
+using CloudStore.Application.Abstractions;
 using CloudStore.Application.Behaviors;
+using CloudStore.Application.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(assembly);
+        services.AddScoped<IDirectoryNameGenerator, DirectoryNameGenerator>();
 
         return services;
     }

@@ -1,4 +1,4 @@
-using CloudStore.Application.DTOs.Responses;
+using CloudStore.Application.DTOs.Responses.Users;
 using CloudStore.Domain.Abstractions.Repositories.Users;
 using CloudStore.Domain.Exceptions.Users;
 using MediatR;
@@ -10,9 +10,8 @@ public class GetUserByIdQueryHandler(IUserReadRepository readRepository)
 {
     public async Task<UserResponse> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var user = await readRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (user is null) throw new UserNotFoundException(request.Id);
+        var user = await readRepository.GetByIdAsync(request.Id, cancellationToken)
+                   ?? throw new UserNotFoundException(request.Id);
 
         return UserResponse.FromUser(user);
     }

@@ -1,4 +1,5 @@
 using CloudStore.Application.Abstractions;
+using CloudStore.Application.DTOs.Responses.Auth;
 using CloudStore.Domain.Abstractions.Repositories.Users;
 using CloudStore.Domain.Exceptions.Users;
 using MediatR;

@@ -1,11 +1,11 @@
-using CloudStore.Application.DTOs.Responses;
+using CloudStore.Application.DTOs.Responses.Users;
 using CloudStore.Domain.Abstractions.Repositories.Users;
 using CloudStore.Domain.Exceptions.Users;
 using MediatR;
 
 namespace CloudStore.Application.Features.Auth.GetMe;
 
-public sealed class GetMeQueryHandler(IUserReadRepository userReadRepository) 
+public sealed class GetMeQueryHandler(IUserReadRepository userReadRepository)
     : IRequestHandler<GetMeQuery, UserResponse>
 {
     public async Task<UserResponse> Handle(GetMeQuery request, CancellationToken cancellationToken)
@@ -17,4 +17,4 @@ public sealed class GetMeQueryHandler(IUserReadRepository userReadRepository)
 
         return UserResponse.FromUser(user);
     }
-} 
+}

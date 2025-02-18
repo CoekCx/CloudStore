@@ -1,4 +1,4 @@
-using CloudStore.Application.DTOs.Responses;
+using CloudStore.Application.DTOs.Responses.Users;
 using MediatR;
 
 namespace CloudStore.Application.Features.Users.Create;

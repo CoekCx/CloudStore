@@ -1,5 +1,5 @@
 using CloudStore.Application.Abstractions;
-using CloudStore.Application.DTOs.Responses;
+using CloudStore.Application.DTOs.Responses.Users;
 using CloudStore.Domain.Abstractions;
 using CloudStore.Domain.Abstractions.Repositories.Directories;
 using CloudStore.Domain.Abstractions.Repositories.Users;
@@ -31,7 +31,7 @@ public sealed class CreateUserCommandHandler(
         await writeRepository.AddAsync(user, cancellationToken);
 
         // Create root directory
-        var rootDirectory = new Directory(null, "Root", user);
+        var rootDirectory = new Directory(null, "Root", user.Id);
         await directoryWriteRepository.AddAsync(rootDirectory, cancellationToken);
 
         // Save all changes atomically
