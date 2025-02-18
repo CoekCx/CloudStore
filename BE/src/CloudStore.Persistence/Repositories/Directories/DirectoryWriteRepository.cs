@@ -8,4 +8,9 @@ namespace CloudStore.Persistence.Repositories.Directories;
 public class DirectoryWriteRepository(ApplicationDbContext context)
     : WriteRepository<Directory>(context), IDirectoryWriteRepository
 {
-} 
+    public async Task<Directory> CreateDirectoryAsync(Directory directory, CancellationToken cancellationToken)
+    {
+        var entry = await DbSet.AddAsync(directory, cancellationToken);
+        return entry.Entity;
+    }
+}

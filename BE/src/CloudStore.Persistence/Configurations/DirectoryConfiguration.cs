@@ -1,3 +1,4 @@
+using CloudStore.Domain.Entities;
 using CloudStore.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,14 +19,16 @@ public sealed class DirectoryConfiguration : IEntityTypeConfiguration<Directory>
             .HasMaxLength(255);
 
         // Self-referencing relationship for parent-child directories
-        builder.HasOne(d => d.ParentDirectory)
+        builder.HasOne<Directory>()
             .WithMany(d => d.Subdirectories)
+            .HasForeignKey(d => d.ParentDirectoryId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired(false);
 
         // Relationship with User
-        builder.HasOne(d => d.Owner)
+        builder.HasOne<User>()
             .WithMany()
+            .HasForeignKey(d => d.OwnerId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
     }

@@ -36,12 +36,14 @@ public sealed class FileConfiguration : IEntityTypeConfiguration<File>
         // Relationship with Directory
         builder.HasOne(f => f.ParentDirectory)
             .WithMany(d => d.Files)
+            .HasForeignKey(f => f.ParentDirectoryId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         // Relationship with User
         builder.HasOne(f => f.Owner)
             .WithMany()
+            .HasForeignKey(f => f.OwnerId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
     }
