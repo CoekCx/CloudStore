@@ -19,7 +19,7 @@ public class FileReadRepository(ReadOnlyApplicationDbContext context)
     public async Task<Guid> GetByDirectoryId(Guid directoryId)
     {
         var file = await DbSet
-            .FirstOrDefaultAsync(f => f.ParentDirectory.Id == directoryId);
+            .FirstOrDefaultAsync(f => f.ParentDirectoryId == directoryId);
 
         return file?.Id ?? Guid.Empty;
     }

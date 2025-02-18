@@ -2,7 +2,7 @@ using System.Text;
 using CloudStore.Application.Abstractions;
 using Epoche;
 
-namespace CloudStore.Infrastructure.Services;
+namespace CloudStore.Infrastructure.Authentication;
 
 public sealed class PasswordHasher : IPasswordHasher
 {

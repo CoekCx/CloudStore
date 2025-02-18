@@ -1,6 +1,6 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Infrastructure.Authentication;
-using CloudStore.Infrastructure.Services;
+using CloudStore.Infrastructure.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CloudStore.Infrastructure;
@@ -11,6 +11,9 @@ public static class DependencyInjection
     {
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<ITokenGenerator, JwtProvider>();
+        services.AddScoped<IStorageService, StorageService>();
+        services.AddScoped<IFileFormatter, FileUrlFormatter>();
+        services.AddScoped<IFileStorageService, FileStorageService>();
 
         return services;
     }

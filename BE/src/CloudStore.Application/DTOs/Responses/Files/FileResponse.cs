@@ -21,8 +21,8 @@ public sealed record FileResponse(
             file.Extension,
             file.Url,
             file.Size,
-            file.ParentDirectory.Id,
-            file.Owner.Id,
+            file.ParentDirectoryId,
+            file.OwnerId,
             file.CreatedOnUtc,
             file.ModifiedOnUtc);
     }

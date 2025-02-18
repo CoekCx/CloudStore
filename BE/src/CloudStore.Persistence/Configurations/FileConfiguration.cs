@@ -1,6 +1,8 @@
+using CloudStore.Domain.Entities;
 using CloudStore.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Directory = CloudStore.Domain.Entities.Directory;
 using File = CloudStore.Domain.Entities.File;
 
 namespace CloudStore.Persistence.Configurations;
@@ -34,14 +36,14 @@ public sealed class FileConfiguration : IEntityTypeConfiguration<File>
         builder.Property(f => f.ModifiedOnUtc);
 
         // Relationship with Directory
-        builder.HasOne(f => f.ParentDirectory)
+        builder.HasOne<Directory>()
             .WithMany(d => d.Files)
             .HasForeignKey(f => f.ParentDirectoryId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         // Relationship with User
-        builder.HasOne(f => f.Owner)
+        builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(f => f.OwnerId)
             .OnDelete(DeleteBehavior.Restrict)

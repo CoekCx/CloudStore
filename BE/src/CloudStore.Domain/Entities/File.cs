@@ -10,9 +10,7 @@ public class File : BaseEntity
         : this()
     {
         Id = Guid.NewGuid();
-        ParentDirectory = parentDirectory;
         ParentDirectoryId = parentDirectory.Id;
-        Owner = owner;
         OwnerId = owner.Id;
         Url = url;
         Name = name;
@@ -37,8 +35,4 @@ public class File : BaseEntity
     // Foreign keys
     public Guid ParentDirectoryId { get; set; }
     public Guid OwnerId { get; set; }
-
-    // Navigation properties
-    public Directory ParentDirectory { get; private set; }
-    public User Owner { get; private set; }
 }
