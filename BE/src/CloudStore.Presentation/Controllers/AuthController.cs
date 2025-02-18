@@ -1,7 +1,7 @@
-using CloudStore.Application.DTOs.Responses.Auth;
-using CloudStore.Application.DTOs.Responses.Users;
-using CloudStore.Application.Features.Auth.GetMe;
-using CloudStore.Application.Features.Auth.Login;
+using CloudStore.Application.Responses.Auth;
+using CloudStore.Application.Responses.Users;
+using CloudStore.Application.UseCases.Auth.GetMe;
+using CloudStore.Application.UseCases.Auth.Login;
 using CloudStore.Presentation.DTOs.Requests.Auth;
 using CloudStore.Presentation.Extensions;
 using MediatR;

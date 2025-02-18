@@ -1,9 +1,9 @@
-using CloudStore.Application.DTOs.Responses.Files;
-using CloudStore.Application.Features.Files.Create;
-using CloudStore.Application.Features.Files.Delete;
-using CloudStore.Application.Features.Files.GetById;
-using CloudStore.Application.Features.Files.Move;
-using CloudStore.Application.Features.Files.Update;
+using CloudStore.Application.Responses.Files;
+using CloudStore.Application.UseCases.Files.Create;
+using CloudStore.Application.UseCases.Files.Delete;
+using CloudStore.Application.UseCases.Files.GetById;
+using CloudStore.Application.UseCases.Files.Move;
+using CloudStore.Application.UseCases.Files.Update;
 using CloudStore.Presentation.DTOs.Requests.Files;
 using CloudStore.Presentation.Extensions;
 using MediatR;
