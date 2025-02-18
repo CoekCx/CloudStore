@@ -1,6 +1,8 @@
-using CloudStore.Application.DTOs.Responses;
+using CloudStore.Application.DTOs.Responses.Auth;
+using CloudStore.Application.DTOs.Responses.Users;
 using CloudStore.Application.Features.Auth.GetMe;
 using CloudStore.Application.Features.Auth.Login;
+using CloudStore.Presentation.DTOs.Requests.Auth;
 using CloudStore.Presentation.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -45,10 +47,7 @@ public class AuthController(IMediator sender) : ControllerBase
     {
         var userId = HttpContext.User.GetUserIdentityId();
 
-        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var parsedUserId))
-            return Unauthorized();
-
-        var query = new GetMeQuery(parsedUserId);
+        var query = new GetMeQuery(userId);
         var result = await sender.Send(query, cancellationToken);
         return Ok(result);
     }

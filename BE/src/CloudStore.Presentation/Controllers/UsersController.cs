@@ -1,10 +1,10 @@
-using CloudStore.Application.DTOs.Responses;
+using CloudStore.Application.DTOs.Responses.Users;
 using CloudStore.Application.Features.Users.Create;
 using CloudStore.Application.Features.Users.Delete;
 using CloudStore.Application.Features.Users.GetAll;
 using CloudStore.Application.Features.Users.GetById;
 using CloudStore.Application.Features.Users.Update;
-using CloudStore.Presentation.DTOs.Requests;
+using CloudStore.Presentation.DTOs.Requests.Users;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,13 +1,19 @@
 using System.Security.Claims;
+using CloudStore.Domain.Exceptions;
 
 namespace CloudStore.Presentation.Extensions;
 
 public static class ClaimsPrincipalExtensions
 {
-    public static string GetUserIdentityId(this ClaimsPrincipal user)
+    public static Guid GetUserIdentityId(this ClaimsPrincipal user)
     {
-        return user.Claims
+        var stringId = user.Claims
             .SingleOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)
-            ?.Value!;
+            ?.Value! ?? throw new UnauthorizedException();
+
+        if (!Guid.TryParse(stringId, out var result))
+            throw new UnauthorizedException();
+
+        return result;
     }
 }

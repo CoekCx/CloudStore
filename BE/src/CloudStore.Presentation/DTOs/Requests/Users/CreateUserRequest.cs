@@ -1,4 +1,4 @@
-namespace CloudStore.Presentation.DTOs.Requests;
+namespace CloudStore.Presentation.DTOs.Requests.Users;
 
 public sealed record CreateUserRequest(
     string Email,
