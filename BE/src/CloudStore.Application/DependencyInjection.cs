@@ -20,7 +20,7 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(assembly);
-        services.AddScoped<IDirectoryNameGenerator, DirectoryNameGenerator>();
+        services.AddScoped<IFileSystemNameGenerator, FileSystemNameGenerator>();
 
         return services;
     }

@@ -11,7 +11,7 @@ namespace CloudStore.Application.Features.Directories.Update;
 public class UpdateDirectoryCommandHandler(
     IDirectoryWriteRepository directoryWriteRepository,
     IDirectoryReadRepository directoryReadRepository,
-    IDirectoryNameGenerator directoryNameGenerator,
+    IFileSystemNameGenerator fileSystemNameGenerator,
     IUnitOfWork unitOfWork)
     : IRequestHandler<UpdateDirectoryCommand, DirectoryResponse>
 {
@@ -26,7 +26,8 @@ public class UpdateDirectoryCommandHandler(
         if (directory.ParentDirectoryId == null)
             throw new RootDirectoryModificationException();
 
-        var uniqueName = directoryNameGenerator.GenerateUniqueName(request.NewName, directory.ParentDirectoryId);
+        var uniqueName =
+            fileSystemNameGenerator.GenerateUniqueDirectoryName(request.NewName, directory.ParentDirectoryId);
         directory.Name = uniqueName;
 
         await directoryWriteRepository.UpdateAsync(directory, cancellationToken);

@@ -10,7 +10,7 @@ namespace CloudStore.Application.Features.Directories.Move;
 public class MoveDirectoryCommandHandler(
     IDirectoryWriteRepository directoryWriteRepository,
     IDirectoryReadRepository directoryReadRepository,
-    IDirectoryNameGenerator directoryNameGenerator,
+    IFileSystemNameGenerator fileSystemNameGenerator,
     IUnitOfWork unitOfWork)
     : IRequestHandler<MoveDirectoryCommand, Unit>
 {
@@ -31,7 +31,7 @@ public class MoveDirectoryCommandHandler(
         var newParentDirectory =
             await directoryReadRepository.GetByIdAsync((Guid)request.NewParentDirectoryId!, cancellationToken);
 
-        var uniqueName = directoryNameGenerator.GenerateUniqueName(directory.Name, request.NewParentDirectoryId);
+        var uniqueName = fileSystemNameGenerator.GenerateUniqueDirectoryName(directory.Name, request.NewParentDirectoryId);
         directory.Name = uniqueName;
         directory.ParentDirectoryId = newParentDirectory!.Id;
 

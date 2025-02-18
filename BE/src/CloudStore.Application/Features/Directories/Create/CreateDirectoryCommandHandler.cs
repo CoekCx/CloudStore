@@ -14,7 +14,7 @@ public class CreateDirectoryCommandHandler(
     IDirectoryWriteRepository directoryWriteRepository,
     IDirectoryReadRepository directoryReadRepository,
     IUserReadRepository userReadRepository,
-    IDirectoryNameGenerator directoryNameGenerator,
+    IFileSystemNameGenerator fileSystemNameGenerator,
     IUnitOfWork unitOfWork)
     : IRequestHandler<CreateDirectoryCommand, DirectoryResponse>
 {
@@ -29,7 +29,7 @@ public class CreateDirectoryCommandHandler(
                 (Guid)request.ParentDirectoryId,
                 cancellationToken) ?? throw new RootDirectoryCreationException();
 
-        var uniqueName = directoryNameGenerator.GenerateUniqueName(request.Name, parentDirectory?.Id);
+        var uniqueName = fileSystemNameGenerator.GenerateUniqueDirectoryName(request.Name, parentDirectory?.Id);
         var directory = new Directory(parentDirectory?.Id, uniqueName, owner.Id);
 
         await directoryWriteRepository.AddAsync(directory, cancellationToken);
