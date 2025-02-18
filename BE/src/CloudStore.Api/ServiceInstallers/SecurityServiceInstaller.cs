@@ -17,6 +17,7 @@ public static class SecurityServiceInstaller
     private static void InstallOptions(IServiceCollection services)
     {
         services.ConfigureOptions<JwtOptionsSetup>();
+        services.ConfigureOptions<StorageBucketOptionsSetup>();
     }
 
     private static void InstallCore(IServiceCollection services, IConfiguration configuration)
