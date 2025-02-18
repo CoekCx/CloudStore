@@ -19,7 +19,6 @@
 
     <ItemGroup>
         <Folder Include="DTOs\"/>
-        <Folder Include="DTOs\Requests\Files\"/>
     </ItemGroup>
 
 </Project>
