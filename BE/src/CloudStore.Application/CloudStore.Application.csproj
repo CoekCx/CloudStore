@@ -7,13 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CloudStore.Domain\CloudStore.Domain.csproj"/>
+        <ProjectReference Include="..\CloudStore.Domain\CloudStore.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="12.0.0-preview1"/>
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0-preview1"/>
-        <PackageReference Include="MediatR" Version="12.4.1"/>
+        <PackageReference Include="FluentValidation" Version="12.0.0-preview1" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0-preview1" />
+        <PackageReference Include="MediatR" Version="12.4.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     </ItemGroup>
 
     <ItemGroup>
