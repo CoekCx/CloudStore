@@ -1,3 +1,4 @@
+using CloudStore.Domain.Abstractions.NewFolder;
 using CloudStore.Domain.Errors;
 
 namespace CloudStore.Domain.Exceptions.Users;
@@ -5,7 +6,7 @@ namespace CloudStore.Domain.Exceptions.Users;
 public sealed class UserNotFoundException : NotFoundException
 {
     public UserNotFoundException(Guid userId)
-        : base("User not found", $"User with the Id {userId} was not found.", Error.UserNotFound)
+        : base("User not found", $"User with the Value {userId} was not found.", Error.UserNotFound)
     {
     }
 

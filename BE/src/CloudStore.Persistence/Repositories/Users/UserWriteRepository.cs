@@ -1,34 +1,24 @@
-using CloudStore.Domain.Abstractions.Repositories.Users;
 using CloudStore.Domain.Entities;
-using CloudStore.Domain.Exceptions.Users;
-using CloudStore.Persistence.Context;
-using CloudStore.Persistence.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
+using CloudStore.Domain.EntityIdentifiers;
+using CloudStore.Domain.Repositories.Users;
+using CloudStore.Persistence.Contexts;
 
 namespace CloudStore.Persistence.Repositories.Users;
 
-public class UserWriteRepository(ApplicationDbContext context) : WriteRepository<User>(context), IUserWriteRepository
+public class UserWriteRepository(WriteDbContext context) : IUserWriteRepository
 {
-    public async Task UpdatePasswordHashAsync(Guid userId, string newPasswordHash, CancellationToken cancellationToken)
+    public void Add(User user)
     {
-        var user = await DbSet.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
-                   ?? throw new UserNotFoundException(userId);
-
-        user.PasswordHash = newPasswordHash;
-        await UpdateAsync(user, cancellationToken);
+        throw new NotImplementedException();
     }
 
-    public async Task UpdateAsync(
-        Guid userId,
-        string firstName,
-        string lastName,
-        CancellationToken cancellationToken)
+    public void Remove(User user)
     {
-        var user = await DbSet.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
-                   ?? throw new UserNotFoundException(userId);
+        throw new NotImplementedException();
+    }
 
-        user.FirstName = firstName;
-        user.LastName = lastName;
-        await UpdateAsync(user, cancellationToken);
+    public Task<User> GetByIdAsync(UserId userId, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }

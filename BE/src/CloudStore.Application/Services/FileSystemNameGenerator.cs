@@ -1,16 +1,17 @@
 using CloudStore.Application.Abstractions;
-using CloudStore.Domain.Abstractions.Repositories.Directories;
+using CloudStore.Domain.EntityIdentifiers;
+using CloudStore.Domain.Repositories.Directories;
 
 namespace CloudStore.Application.Services;
 
 public class FileSystemNameGenerator(IDirectoryReadRepository directoryReadRepository) : IFileSystemNameGenerator
 {
-    public string GenerateUniqueDirectoryName(string desiredName, Guid? parentDirectoryId)
+    public async Task<string> GenerateUniqueDirectoryName(string desiredName, DirectoryId? parentId)
     {
         var newName = desiredName;
         var timesRenamed = 0;
 
-        while (directoryReadRepository.DirectoryAlreadyExists(newName, parentDirectoryId))
+        while (await directoryReadRepository.ExistsAsync(newName, parentId))
         {
             if (++timesRenamed == 1)
             {
@@ -26,14 +27,12 @@ public class FileSystemNameGenerator(IDirectoryReadRepository directoryReadRepos
 
     public async Task<string> GenerateUniqueFileName(
         string desiredName,
-        Guid parentDirectoryId,
+        DirectoryId parentId,
         CancellationToken cancellationToken = default)
     {
         var newName = desiredName;
         var timesRenamed = 0;
-
-        var parentDirectory =
-            await directoryReadRepository.GetByIdWithContentsAsync(parentDirectoryId, cancellationToken);
+        var parentDirectory = await directoryReadRepository.GetByIdWithContentsAsync(parentId, cancellationToken);
 
         var fileNames = parentDirectory!.Files.Select(f => f.Name).ToList();
 

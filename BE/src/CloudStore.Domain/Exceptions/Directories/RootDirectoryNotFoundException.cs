@@ -1,3 +1,4 @@
+using CloudStore.Domain.Abstractions.NewFolder;
 using CloudStore.Domain.Errors;
 
 namespace CloudStore.Domain.Exceptions.Directories;

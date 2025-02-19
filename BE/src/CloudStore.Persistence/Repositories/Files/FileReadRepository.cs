@@ -1,26 +1,20 @@
-using CloudStore.Domain.Abstractions.Repositories.Files;
-using CloudStore.Persistence.Context;
-using CloudStore.Persistence.Repositories.Base;
+using CloudStore.Domain.EntityIdentifiers;
+using CloudStore.Domain.Repositories.Files;
+using CloudStore.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using File = CloudStore.Domain.Entities.File;
 
 namespace CloudStore.Persistence.Repositories.Files;
 
-public class FileReadRepository(ReadOnlyApplicationDbContext context)
-    : ReadRepository<File>(context), IFileReadRepository
+public class FileReadRepository(ReadDbContext context) : IFileReadRepository
 {
-    public Task<List<File>> GetByIds(List<Guid> ids)
-    {
-        return DbSet
-            .Where(f => ids.Contains(f.Id))
-            .ToListAsync();
-    }
+    // Maybe needs to be with value
+    public async Task<List<File>> GetByIds(List<FileId> ids, CancellationToken cancellationToken) => 
+        await context.Set<File>()
+            .Where(x => ids.Select(x=>x).Contains(x.Id))
+            .ToListAsync(cancellationToken);
 
-    public async Task<Guid> GetByDirectoryId(Guid directoryId)
-    {
-        var file = await DbSet
-            .FirstOrDefaultAsync(f => f.ParentDirectoryId == directoryId);
-
-        return file?.Id ?? Guid.Empty;
-    }
+    public async Task<File?> GetById(FileId id, CancellationToken cancellationToken) =>
+        await context.Set<File>()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 }

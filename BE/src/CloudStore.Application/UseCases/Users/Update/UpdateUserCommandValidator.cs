@@ -8,7 +8,7 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .WithMessage("Id cannot be empty.");
+            .WithMessage("Value cannot be empty.");
 
         RuleFor(x => x.FirstName)
             .NotEmpty()

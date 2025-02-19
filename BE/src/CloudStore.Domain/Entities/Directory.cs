@@ -1,28 +1,30 @@
+using CloudStore.Domain.Abstractions.Core;
+using CloudStore.Domain.EntityIdentifiers;
+
 namespace CloudStore.Domain.Entities;
 
-public class Directory : BaseEntity
+public class Directory : Entity<DirectoryId>
 {
-    protected Directory()
-    {
-        Id = Guid.NewGuid();
-        Subdirectories = [];
-        Files = [];
-    }
+    public string Name { get; private set; }
 
-    public Directory(Guid? parentDirectoryId, string name, Guid ownerId) : this()
+    public UserId OwnerId { get; private set; }
+
+    public DirectoryId? ParentDirectoryId { get; private set; }
+
+    public ICollection<Directory> Subdirectories { get; private set; }
+
+    public ICollection<File> Files { get; private set; }
+
+    private Directory(DirectoryId id, DirectoryId? parentDirectoryId, string name, UserId ownerId) : base(id)
     {
         Name = name;
         ParentDirectoryId = parentDirectoryId;
         OwnerId = ownerId;
     }
 
-    public string Name { get; set; }
-
-    // Foreign keys
-    public Guid OwnerId { get; set; }
-    public Guid? ParentDirectoryId { get; set; }
-
-    // Navigation properties
-    public ICollection<Directory> Subdirectories { get; private set; }
-    public ICollection<File> Files { get; private set; }
+    public static Directory Create(DirectoryId? parentDirectoryId, string name, UserId ownerId) => new(
+        new DirectoryId(Guid.NewGuid()),
+        parentDirectoryId,
+        name,
+        ownerId);
 }

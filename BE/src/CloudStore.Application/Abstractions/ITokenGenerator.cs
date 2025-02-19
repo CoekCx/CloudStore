@@ -1,6 +1,8 @@
+using CloudStore.Domain.EntityIdentifiers;
+
 namespace CloudStore.Application.Abstractions;
 
 public interface ITokenGenerator
 {
-    string Generate(Guid id, string email);
+    string Generate(UserId id, string email);
 }

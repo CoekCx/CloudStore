@@ -1,37 +1,26 @@
-using CloudStore.Domain.Abstractions.Repositories.Directories;
+using CloudStore.Domain.EntityIdentifiers;
 using CloudStore.Domain.Exceptions.Directories;
-using CloudStore.Persistence.Context;
-using CloudStore.Persistence.Repositories.Base;
+using CloudStore.Domain.Repositories.Directories;
+using CloudStore.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Directory = CloudStore.Domain.Entities.Directory;
 
 namespace CloudStore.Persistence.Repositories.Directories;
 
-public class DirectoryReadRepository(ReadOnlyApplicationDbContext context)
-    : ReadRepository<Directory>(context), IDirectoryReadRepository
+public class DirectoryReadRepository(ReadDbContext context) : IDirectoryReadRepository
 {
-    public override Task<Directory?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<bool> ExistsAsync(string name, DirectoryId? parentId)
     {
-        return DbSet.FirstOrDefaultAsync(d => d.Id == id, cancellationToken);
+        throw new NotImplementedException();
     }
 
-    public bool DirectoryAlreadyExists(string name, Guid? parentId)
+    public Task<Directory?> GetByIdWithContentsAsync(DirectoryId id, CancellationToken cancellationToken)
     {
-        return DbSet.Any(d => d.Name == name && d.ParentDirectoryId == parentId);
+        throw new NotImplementedException();
     }
 
-    public Task<Directory?> GetByIdWithContentsAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<Directory> GetRootDirectory(UserId ownerId, CancellationToken cancellationToken)
     {
-        return DbSet
-            .Include(d => d.Subdirectories)
-            .Include(d => d.Files)
-            .FirstOrDefaultAsync(d => d.Id == id, cancellationToken);
-    }
-
-    public Task<Directory> GetRootDirectory(Guid ownerId, CancellationToken cancellationToken = default)
-    {
-        return (DbSet
-                    .FirstOrDefaultAsync(d => d.ParentDirectoryId == null && d.OwnerId == ownerId, cancellationToken)
-                ?? throw new RootDirectoryNotFoundException(ownerId))!;
+        throw new NotImplementedException();
     }
 }

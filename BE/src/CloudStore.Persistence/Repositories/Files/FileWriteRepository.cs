@@ -1,11 +1,6 @@
-using CloudStore.Domain.Abstractions.Repositories.Files;
-using CloudStore.Persistence.Context;
-using CloudStore.Persistence.Repositories.Base;
-using File = CloudStore.Domain.Entities.File;
+using CloudStore.Domain.Repositories.Files;
+using CloudStore.Persistence.Contexts;
 
 namespace CloudStore.Persistence.Repositories.Files;
 
-public class FileWriteRepository(ApplicationDbContext context) 
-    : WriteRepository<File>(context), IFileWriteRepository
-{
-} 
+public class FileWriteRepository(WriteDbContext context) : IFileWriteRepository;

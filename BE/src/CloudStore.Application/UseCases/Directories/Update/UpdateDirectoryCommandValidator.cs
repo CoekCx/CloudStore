@@ -1,4 +1,4 @@
-using CloudStore.Application.Validation;
+using CloudStore.Application.Extensions;
 using FluentValidation;
 
 namespace CloudStore.Application.UseCases.Directories.Update;
@@ -17,7 +17,7 @@ public class UpdateDirectoryCommandValidator : AbstractValidator<UpdateDirectory
             .NotEmpty().WithMessage("Directory name is required.")
             .NotNull().WithMessage("Directory name is null.")
             .MaximumLength(255).WithMessage("Directory name length exceeded.")
-            .Must(name => !DirectoryValidatorHelper.ContainsInvalidCharacters(name))
+            .MustHaveValidFileName()
             .WithMessage("Directory name contains invalid characters.");
     }
 } 

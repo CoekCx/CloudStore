@@ -1,8 +1,8 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Application.Responses.Directories;
-using CloudStore.Domain.Abstractions;
-using CloudStore.Domain.Abstractions.Repositories.Directories;
 using CloudStore.Domain.Exceptions.Directories;
+using CloudStore.Domain.Repositories;
+using CloudStore.Domain.Repositories.Directories;
 using MediatR;
 using DirectoryNotFoundException = CloudStore.Domain.Exceptions.Directories.DirectoryNotFoundException;
 

@@ -1,7 +1,7 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Application.Responses.Auth;
-using CloudStore.Domain.Abstractions.Repositories.Users;
 using CloudStore.Domain.Exceptions.Users;
+using CloudStore.Domain.Repositories.Users;
 using MediatR;
 
 namespace CloudStore.Application.UseCases.Auth.Login;
@@ -9,25 +9,32 @@ namespace CloudStore.Application.UseCases.Auth.Login;
 public sealed class LoginCommandHandler(
     IUserReadRepository userReadRepository,
     IPasswordHasher passwordHasher,
-    ITokenGenerator tokenGenerator) : IRequestHandler<LoginCommand, LoginResponse>
+    ITokenGenerator tokenGenerator) : IRequestHandler<LoginCommand, string>
 {
-    public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         var user = await userReadRepository.GetByEmailAsync(request.Email);
 
         if (user is null)
+        {
             throw new UserNotFoundException(request.Email);
+        }
 
-        var isPasswordValid = passwordHasher.VerifyPassword(user.Id, request.Password, user.PasswordHash);
+        var isValid = passwordHasher.VerifyPassword(
+            user.Id,
+            request.Password,
+            user.PasswordHash);
 
-        if (!isPasswordValid)
+        if (!isValid)
+        {
             throw new UserPasswordInvalidException();
+        }
 
         if (!user.IsEmailVerified)
+        {
             throw new UserEmailNotVerifiedException();
+        }
 
-        var token = tokenGenerator.Generate(user.Id, user.Email);
-
-        return new LoginResponse(user.Id, user.Email, token);
+        return tokenGenerator.Generate(user.Id, user.Email);
     }
 }

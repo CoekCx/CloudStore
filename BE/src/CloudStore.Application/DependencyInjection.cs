@@ -1,3 +1,4 @@
+using System.Reflection;
 using CloudStore.Application.Abstractions;
 using CloudStore.Application.Behaviors;
 using CloudStore.Application.Services;
@@ -11,7 +12,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        var assembly = typeof(DependencyInjection).Assembly;
+        var assembly = Assembly.GetExecutingAssembly();
 
         services.AddMediatR(cfg =>
         {
@@ -20,6 +21,7 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(assembly);
+
         services.AddScoped<IFileSystemNameGenerator, FileSystemNameGenerator>();
 
         return services;

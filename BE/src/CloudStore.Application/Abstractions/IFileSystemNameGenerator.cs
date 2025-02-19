@@ -1,11 +1,13 @@
+using CloudStore.Domain.EntityIdentifiers;
+
 namespace CloudStore.Application.Abstractions;
 
 public interface IFileSystemNameGenerator
 {
-    string GenerateUniqueDirectoryName(string desiredName, Guid? parentDirectoryId);
+    Task<string> GenerateUniqueDirectoryName(string desiredName, DirectoryId? parentId);
 
     Task<string> GenerateUniqueFileName(
         string desiredName,
-        Guid parentDirectoryId,
+        DirectoryId parentId,
         CancellationToken cancellationToken = default);
 }

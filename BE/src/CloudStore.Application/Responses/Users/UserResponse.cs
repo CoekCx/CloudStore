@@ -6,6 +6,6 @@ public sealed record UserResponse(Guid Id, string Email, string FirstName, strin
 {
     public static UserResponse FromUser(User user)
     {
-        return new UserResponse(user.Id, user.Email, user.FirstName, user.LastName);
+        return new UserResponse(user.Id.Value, user.Email, user.FirstName, user.LastName);
     }
 }

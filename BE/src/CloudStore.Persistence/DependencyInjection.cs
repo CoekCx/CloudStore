@@ -1,10 +1,8 @@
-using CloudStore.Domain.Abstractions;
-using CloudStore.Domain.Abstractions.Repositories.Base;
-using CloudStore.Domain.Abstractions.Repositories.Directories;
-using CloudStore.Domain.Abstractions.Repositories.Files;
-using CloudStore.Domain.Abstractions.Repositories.Users;
-using CloudStore.Persistence.Context;
-using CloudStore.Persistence.Repositories.Base;
+using CloudStore.Domain.Repositories;
+using CloudStore.Domain.Repositories.Directories;
+using CloudStore.Domain.Repositories.Files;
+using CloudStore.Domain.Repositories.Users;
+using CloudStore.Persistence.Contexts;
 using CloudStore.Persistence.Repositories.Directories;
 using CloudStore.Persistence.Repositories.Files;
 using CloudStore.Persistence.Repositories.Users;
@@ -17,19 +15,13 @@ namespace CloudStore.Persistence;
 public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
-    {
-        // Register DbContexts
-        services.AddDbContext<ApplicationDbContext>(options =>
+    { 
+        services.AddDbContext<WriteDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("Postgres")));
 
-        services.AddDbContext<ReadOnlyApplicationDbContext>(options =>
+        services.AddDbContext<ReadDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("Postgres")));
 
-        // Register Generic Repositories
-        services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
-        services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
-
-        // Register Specific Repositories
         services.AddScoped<IUserReadRepository, UserReadRepository>();
         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
         services.AddScoped<IDirectoryReadRepository, DirectoryReadRepository>();

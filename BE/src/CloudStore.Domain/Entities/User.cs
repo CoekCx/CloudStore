@@ -1,32 +1,55 @@
+using CloudStore.Domain.Abstractions.Core;
+using CloudStore.Domain.EntityIdentifiers;
+using CloudStore.Domain.Events.Users;
+
 namespace CloudStore.Domain.Entities;
 
-public class User : BaseEntity
+public class User : Entity<UserId>, IAuditableEntity
 {
-    public required string Email { get; init; }
-    public string PasswordHash { get; set; } = null!;
-    public string FirstName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
+    public string Email { get; private set; }
+
+    public string PasswordHash { get; private set; }
+
+    public string FirstName { get; private set; }
+
+    public string LastName { get; private set; }
+
     public bool IsEmailVerified { get; private set; }
-    public DateTime CreatedAt { get; private set; }
 
-    public static User Create(string email, string firstName, string lastName)
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime? ModifiedAt { get; set; }
+
+    private User(
+        UserId id,
+        string email,
+        string passwordHash,
+        string firstName,
+        string lastName,
+        bool isEmailVerified,
+        DateTime createdAt) : base(id)
     {
-        return new User
-        {
-            Id = Guid.NewGuid(),
-            Email = email,
-            PasswordHash = "",
-            FirstName = firstName,
-            LastName = lastName,
-            IsEmailVerified = false,
-            CreatedAt = DateTime.UtcNow
-        };
+        Email = email;
+        PasswordHash = passwordHash;
+        FirstName = firstName;
+        LastName = lastName;
+        IsEmailVerified = isEmailVerified;
+        CreatedAt = createdAt;
+
+        RaiseDomainEvent(new UserCreatedDomainEvent(id.Value));
     }
 
-    public void VerifyEmail()
-    {
-        IsEmailVerified = true;
-    }
+    public static User Create(string email, string firstName, string lastName) =>
+        new(
+            new UserId(Guid.NewGuid()),
+            email,
+            "",
+            firstName,
+            lastName,
+            false,
+            DateTime.UtcNow);
+
+    public void VerifyEmail() => IsEmailVerified = true;
 
     public void Update(string firstName, string lastName)
     {
@@ -36,6 +59,9 @@ public class User : BaseEntity
 
     public void UpdatePasswordHash(string passwordHash)
     {
-        if (!string.IsNullOrWhiteSpace(passwordHash)) PasswordHash = passwordHash;
+        if (!string.IsNullOrWhiteSpace(passwordHash))
+        {
+            PasswordHash = passwordHash;
+        }
     }
 }

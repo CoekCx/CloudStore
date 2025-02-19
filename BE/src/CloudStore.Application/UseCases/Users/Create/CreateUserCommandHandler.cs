@@ -1,10 +1,10 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Application.Responses.Users;
-using CloudStore.Domain.Abstractions;
-using CloudStore.Domain.Abstractions.Repositories.Directories;
-using CloudStore.Domain.Abstractions.Repositories.Users;
 using CloudStore.Domain.Entities;
 using CloudStore.Domain.Exceptions.Users;
+using CloudStore.Domain.Repositories;
+using CloudStore.Domain.Repositories.Directories;
+using CloudStore.Domain.Repositories.Users;
 using MediatR;
 using Directory = CloudStore.Domain.Entities.Directory;
 
@@ -15,28 +15,26 @@ public sealed class CreateUserCommandHandler(
     IUserReadRepository readRepository,
     IDirectoryWriteRepository directoryWriteRepository,
     IPasswordHasher passwordHasher,
-    IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateUserCommand, UserCreatedResponse>
+    IUnitOfWork unitOfWork) : IRequestHandler<CreateUserCommand, Guid>
 {
-    public async Task<UserCreatedResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        // Validation
-        var emailExists = await readRepository.EmailExistsAsync(request.Email);
-        if (emailExists) throw new UserEmailAlreadyExists(request.Email);
+        if (await readRepository.EmailExistsAsync(request.Email))
+        {
+            throw new UserEmailAlreadyExists(request.Email);
+        }
 
-        // Create user
         var user = User.Create(request.Email, request.FirstName, request.LastName);
-        var passwordHash = passwordHasher.HashPassword(user.Id, request.Password);
-        user.UpdatePasswordHash(passwordHash);
-        await writeRepository.AddAsync(user, cancellationToken);
 
-        // Create root directory
-        var rootDirectory = new Directory(null, "Root", user.Id);
-        await directoryWriteRepository.AddAsync(rootDirectory, cancellationToken);
+        user.UpdatePasswordHash(passwordHasher.HashPassword(user.Id, request.Password));
 
-        // Save all changes atomically
+        writeRepository.Add(user);
+        
+        var rootDirectory = Directory.Create(null, "Root", user.Id);
+        directoryWriteRepository.Add(rootDirectory, cancellationToken);
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new UserCreatedResponse(user.Id);
+        return user.Id.Value;
     }
 }

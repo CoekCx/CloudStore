@@ -1,7 +1,7 @@
 using CloudStore.Application.Responses.Directories;
-using CloudStore.Domain.Abstractions.Repositories.Directories;
-using CloudStore.Domain.Abstractions.Repositories.Users;
 using CloudStore.Domain.Exceptions.Users;
+using CloudStore.Domain.Repositories.Directories;
+using CloudStore.Domain.Repositories.Users;
 using MediatR;
 
 namespace CloudStore.Application.UseCases.Directories.GetRoot;
