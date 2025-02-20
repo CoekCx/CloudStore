@@ -19,7 +19,7 @@ public class ProcessOutboxJob(ReadDbContext dbContext, IPublishEndpoint publishE
             return;
         }
 
-        foreach (OutboxMessage message in messages)
+        foreach (var message in messages)
         {
             try
             {

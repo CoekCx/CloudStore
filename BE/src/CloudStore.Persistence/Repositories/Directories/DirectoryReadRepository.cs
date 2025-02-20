@@ -9,18 +9,17 @@ namespace CloudStore.Persistence.Repositories.Directories;
 
 public class DirectoryReadRepository(ReadDbContext context) : IDirectoryReadRepository
 {
-    public Task<bool> ExistsAsync(string name, DirectoryId? parentId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<bool> ExistsAsync(string name, DirectoryId? parentId) =>
+        await context.Set<Directory>().AnyAsync(x => x.Name == name);
 
-    public Task<Directory?> GetByIdWithContentsAsync(DirectoryId id, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Directory?> GetByIdWithContentsAsync(DirectoryId id, CancellationToken cancellationToken) =>
+        await context.Set<Directory>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-    public Task<Directory> GetRootDirectory(UserId ownerId, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Directory?> GetRootDirectory(UserId ownerId, CancellationToken cancellationToken) =>
+        await context.Set<Directory>().FirstOrDefaultAsync(
+            x => x.OwnerId == ownerId && x.ParentDirectoryId == null,
+            cancellationToken);
+
+    public async Task<Directory?> GetByIdAsync(DirectoryId directoryId, CancellationToken cancellationToken) =>
+        await context.Set<Directory>().FirstOrDefaultAsync(x => x.Id == directoryId, cancellationToken);
 }

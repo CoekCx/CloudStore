@@ -1,4 +1,4 @@
-using CloudStore.Domain.Abstractions.NewFolder;
+using CloudStore.Domain.Abstractions.Exceptions;
 using CloudStore.Domain.Errors;
 
 namespace CloudStore.Domain.Exceptions.Users;

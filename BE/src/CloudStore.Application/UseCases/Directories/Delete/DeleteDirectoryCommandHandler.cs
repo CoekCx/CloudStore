@@ -1,3 +1,4 @@
+using CloudStore.Domain.EntityIdentifiers;
 using CloudStore.Domain.Exceptions.Directories;
 using CloudStore.Domain.Repositories;
 using CloudStore.Domain.Repositories.Directories;
@@ -14,16 +15,16 @@ public class DeleteDirectoryCommandHandler(
 {
     public async Task<Unit> Handle(DeleteDirectoryCommand request, CancellationToken cancellationToken)
     {
-        var directory = await directoryReadRepository.GetByIdAsync(request.DirectoryId, cancellationToken)
+        var directory = await directoryReadRepository.GetByIdAsync(new DirectoryId(request.DirectoryId), cancellationToken)
                         ?? throw new DirectoryNotFoundException(request.DirectoryId);
 
-        if (directory.OwnerId != request.OwnerId)
+        if (directory.OwnerId != new UserId(request.OwnerId))
             throw new UnauthorizedDirectoryAccessException();
 
         if (directory.ParentDirectoryId == null)
             throw new RootDirectoryModificationException();
 
-        await directoryWriteRepository.DeleteAsync(directory, cancellationToken);
+        directoryWriteRepository.Delete(directory, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

@@ -17,8 +17,4 @@
         <ProjectReference Include="..\CloudStore.Application\CloudStore.Application.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="DTOs\"/>
-    </ItemGroup>
-
 </Project>

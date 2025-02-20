@@ -5,11 +5,11 @@ namespace CloudStore.Domain.Entities;
 
 public class Directory : Entity<DirectoryId>
 {
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
     public UserId OwnerId { get; private set; }
 
-    public DirectoryId? ParentDirectoryId { get; private set; }
+    public DirectoryId? ParentDirectoryId { get; set; }
 
     public ICollection<Directory> Subdirectories { get; private set; }
 

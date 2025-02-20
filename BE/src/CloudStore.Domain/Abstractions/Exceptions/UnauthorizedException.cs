@@ -1,6 +1,6 @@
 using CloudStore.Domain.Errors;
 
-namespace CloudStore.Domain.Abstractions.NewFolder;
+namespace CloudStore.Domain.Abstractions.Exceptions;
 
 public class UnauthorizedException(
     string title = "Unauthorized",

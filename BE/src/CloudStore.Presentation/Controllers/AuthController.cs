@@ -1,9 +1,8 @@
-using CloudStore.Application.Responses.Auth;
 using CloudStore.Application.Responses.Users;
 using CloudStore.Application.UseCases.Auth.GetMe;
 using CloudStore.Application.UseCases.Auth.Login;
-using CloudStore.Presentation.DTOs.Requests.Auth;
 using CloudStore.Presentation.Extensions;
+using CloudStore.Presentation.Requests.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +20,7 @@ public class AuthController(IMediator sender) : ControllerBase
     [SwaggerOperation(
         Summary = "Login user",
         Description = "Authenticates a user and returns a JWT token")]
-    [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]

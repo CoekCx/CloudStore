@@ -19,7 +19,7 @@ public sealed class CreateUserCommandHandler(
 {
     public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        if (await readRepository.EmailExistsAsync(request.Email))
+        if (await readRepository.EmailExistsAsync(request.Email, cancellationToken))
         {
             throw new UserEmailAlreadyExists(request.Email);
         }

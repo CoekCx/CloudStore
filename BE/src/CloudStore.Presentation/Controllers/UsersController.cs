@@ -4,7 +4,7 @@ using CloudStore.Application.UseCases.Users.Delete;
 using CloudStore.Application.UseCases.Users.GetAll;
 using CloudStore.Application.UseCases.Users.GetById;
 using CloudStore.Application.UseCases.Users.Update;
-using CloudStore.Presentation.DTOs.Requests.Users;
+using CloudStore.Presentation.Requests.Users;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +48,7 @@ public class UsersController(IMediator sender) : ControllerBase
     [SwaggerOperation(
         Summary = "Create new user",
         Description = "Creates a new user in the system")]
-    [ProducesResponseType(typeof(UserCreatedResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -63,7 +63,7 @@ public class UsersController(IMediator sender) : ControllerBase
             request.LastName);
 
         var result = await sender.Send(command, cancellationToken);
-        return CreatedAtAction(nameof(GetUser), new { id = result.Id }, result);
+        return CreatedAtAction(nameof(GetUser), new { id = result }, result);
     }
 
     [HttpPut("{id:guid}")]

@@ -1,4 +1,5 @@
 using CloudStore.Application.Responses.Directories;
+using CloudStore.Domain.EntityIdentifiers;
 using CloudStore.Domain.Exceptions.Directories;
 using CloudStore.Domain.Repositories.Directories;
 using MediatR;
@@ -12,10 +13,10 @@ public class GetDirectoryContentsQueryHandler(IDirectoryReadRepository directory
     public async Task<DirectoryContentsResponse> Handle(GetDirectoryContentsQuery request,
         CancellationToken cancellationToken)
     {
-        var directory = await directoryReadRepository.GetByIdWithContentsAsync(request.DirectoryId, cancellationToken)
+        var directory = await directoryReadRepository.GetByIdWithContentsAsync(new DirectoryId(request.DirectoryId), cancellationToken)
                         ?? throw new DirectoryNotFoundException(request.DirectoryId);
 
-        if (directory.OwnerId != request.OwnerId)
+        if (directory.OwnerId != new UserId(request.OwnerId))
             throw new UnauthorizedDirectoryAccessException();
 
         return DirectoryContentsResponse.FromDirectory(directory);

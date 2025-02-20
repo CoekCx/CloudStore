@@ -9,5 +9,7 @@ public interface IDirectoryReadRepository
 
     Task<Directory?> GetByIdWithContentsAsync(DirectoryId id, CancellationToken cancellationToken);
 
-    Task<Directory> GetRootDirectory(UserId ownerId, CancellationToken cancellationToken);
+    Task<Directory?> GetRootDirectory(UserId ownerId, CancellationToken cancellationToken);
+    
+    Task<Directory?> GetByIdAsync(DirectoryId directoryId, CancellationToken cancellationToken);
 }

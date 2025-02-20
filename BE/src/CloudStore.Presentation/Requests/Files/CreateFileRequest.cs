@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace CloudStore.Presentation.DTOs.Requests.Files;
+namespace CloudStore.Presentation.Requests.Files;
 
 public sealed record CreateFileRequest(
     IFormFile File,

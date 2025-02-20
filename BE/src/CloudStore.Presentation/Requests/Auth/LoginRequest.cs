@@ -1,4 +1,4 @@
-namespace CloudStore.Presentation.DTOs.Requests.Auth;
+namespace CloudStore.Presentation.Requests.Auth;
 
 public sealed record LoginRequest(
     string Email,

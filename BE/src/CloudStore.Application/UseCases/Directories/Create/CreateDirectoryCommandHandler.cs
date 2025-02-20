@@ -1,5 +1,6 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Application.Responses.Directories;
+using CloudStore.Domain.EntityIdentifiers;
 using CloudStore.Domain.Exceptions.Directories;
 using CloudStore.Domain.Exceptions.Users;
 using CloudStore.Domain.Repositories;
@@ -20,19 +21,19 @@ public class CreateDirectoryCommandHandler(
 {
     public async Task<DirectoryResponse> Handle(CreateDirectoryCommand request, CancellationToken cancellationToken)
     {
-        var owner = await userReadRepository.GetByIdAsync(request.OwnerId, cancellationToken)
+        var owner = await userReadRepository.GetByIdAsync(new UserId(request.OwnerId), cancellationToken)
                     ?? throw new UserNotFoundException(request.OwnerId);
 
         Directory? parentDirectory = null;
         if (request.ParentDirectoryId != null)
             parentDirectory = await directoryReadRepository.GetByIdAsync(
-                (Guid)request.ParentDirectoryId,
+                new DirectoryId((Guid)request.ParentDirectoryId),
                 cancellationToken) ?? throw new RootDirectoryCreationException();
 
-        var uniqueName = fileSystemNameGenerator.GenerateUniqueDirectoryName(request.Name, parentDirectory?.Id);
-        var directory = new Directory(parentDirectory?.Id, uniqueName, owner.Id);
+        var uniqueName = await fileSystemNameGenerator.GenerateUniqueDirectoryName(request.Name, parentDirectory?.Id);
+        var directory = Directory.Create(parentDirectory?.Id, uniqueName, owner.Id);
 
-        await directoryWriteRepository.AddAsync(directory, cancellationToken);
+        directoryWriteRepository.Add(directory, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return DirectoryResponse.FromDirectory(directory);

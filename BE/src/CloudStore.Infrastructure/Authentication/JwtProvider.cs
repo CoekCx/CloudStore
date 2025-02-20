@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using CloudStore.Application.Abstractions;
+using CloudStore.Domain.EntityIdentifiers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,7 +12,7 @@ public class JwtProvider(IOptions<JwtOptions> jwtOptions) : ITokenGenerator
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    public string Generate(Guid id, string email)
+    public string Generate(UserId id, string email)
     {
         var claims = new Claim[]
         {

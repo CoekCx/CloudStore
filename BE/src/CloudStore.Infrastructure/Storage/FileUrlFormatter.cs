@@ -1,12 +1,13 @@
 using CloudStore.Application.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace CloudStore.Infrastructure.Storage;
 
-public class FileUrlFormatter(StorageBucketOptions storageBucketOptions) : IFileFormatter
+public class FileUrlFormatter(IOptions<StorageBucketOptions> storageBucketOptions) : IFileFormatter
 {
     public Uri Format(Guid fileId)
     {
         return new
-            Uri($"https://{storageBucketOptions.BucketName}.{storageBucketOptions.AwsS3StorageUrl}/files/{fileId}");
+            Uri($"https://{storageBucketOptions.Value.BucketName}.{storageBucketOptions.Value.AwsS3StorageUrl}/files/{fileId}");
     }
 }

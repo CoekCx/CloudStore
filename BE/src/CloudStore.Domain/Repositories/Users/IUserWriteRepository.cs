@@ -9,5 +9,5 @@ public interface IUserWriteRepository
 
     void Remove(User user);
 
-    Task<User> GetByIdAsync(UserId userId, CancellationToken cancellationToken);
+    Task<User?> GetByIdAsync(UserId userId, CancellationToken cancellationToken);
 }

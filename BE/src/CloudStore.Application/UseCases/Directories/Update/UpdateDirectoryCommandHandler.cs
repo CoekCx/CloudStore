@@ -1,9 +1,11 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Application.Responses.Directories;
+using CloudStore.Domain.EntityIdentifiers;
 using CloudStore.Domain.Exceptions.Directories;
 using CloudStore.Domain.Repositories;
 using CloudStore.Domain.Repositories.Directories;
 using MediatR;
+using Directory = CloudStore.Domain.Entities.Directory;
 using DirectoryNotFoundException = CloudStore.Domain.Exceptions.Directories.DirectoryNotFoundException;
 
 namespace CloudStore.Application.UseCases.Directories.Update;
@@ -17,20 +19,20 @@ public class UpdateDirectoryCommandHandler(
 {
     public async Task<DirectoryResponse> Handle(UpdateDirectoryCommand request, CancellationToken cancellationToken)
     {
-        var directory = await directoryReadRepository.GetByIdAsync(request.Id, cancellationToken)
+        var directory = await directoryReadRepository.GetByIdAsync(new DirectoryId(request.Id), cancellationToken)
                         ?? throw new DirectoryNotFoundException(request.Id);
 
-        if (directory.OwnerId != request.OwnerId)
+        if (directory.OwnerId != new UserId(request.OwnerId))
             throw new UnauthorizedDirectoryAccessException();
 
         if (directory.ParentDirectoryId == null)
             throw new RootDirectoryModificationException();
 
         var uniqueName =
-            fileSystemNameGenerator.GenerateUniqueDirectoryName(request.NewName, directory.ParentDirectoryId);
+            await fileSystemNameGenerator.GenerateUniqueDirectoryName(request.NewName, directory.ParentDirectoryId);
         directory.Name = uniqueName;
 
-        await directoryWriteRepository.UpdateAsync(directory, cancellationToken);
+        directoryWriteRepository.Update(directory);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return DirectoryResponse.FromDirectory(directory);

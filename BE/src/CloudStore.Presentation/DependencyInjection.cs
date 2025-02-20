@@ -22,7 +22,6 @@ public static class DependencyInjection
 
             options.EnableAnnotations();
 
-            // Add JWT Authentication support in Swagger
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = "JWT Authorization header using the Bearer scheme",

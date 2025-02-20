@@ -13,6 +13,15 @@ public sealed class DirectoryConfiguration : IEntityTypeConfiguration<Directory>
         builder.ToTable(TableNames.Directories);
 
         builder.HasKey(d => d.Id);
+        
+        builder.Property(d => d.Id)
+            .HasConversion(EntityIdValueConverters.DirectoryIdConverter);
+
+        builder.Property(d => d.OwnerId)
+            .HasConversion(EntityIdValueConverters.UserIdConverter);
+
+        builder.Property(d => d.ParentDirectoryId)
+            .HasConversion(EntityIdValueConverters.DirectoryIdConverter!);
 
         builder.Property(d => d.Name)
             .IsRequired()

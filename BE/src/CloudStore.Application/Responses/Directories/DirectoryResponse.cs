@@ -8,12 +8,12 @@ public sealed record DirectoryResponse(
     Guid? ParentDirectoryId,
     Guid OwnerId)
 {
-    public static DirectoryResponse FromDirectory(Directory directory)
+    public static DirectoryResponse FromDirectory(Directory? directory)
     {
         return new DirectoryResponse(
-            directory.Id,
+            directory!.Id.Value,
             directory.Name,
-            directory.ParentDirectoryId,
-            directory.OwnerId);
+            directory.ParentDirectoryId?.Value,
+            directory.OwnerId.Value);
     }
 }

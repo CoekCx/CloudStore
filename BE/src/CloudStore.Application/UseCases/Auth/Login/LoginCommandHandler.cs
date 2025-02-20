@@ -1,5 +1,4 @@
 using CloudStore.Application.Abstractions;
-using CloudStore.Application.Responses.Auth;
 using CloudStore.Domain.Exceptions.Users;
 using CloudStore.Domain.Repositories.Users;
 using MediatR;
@@ -13,7 +12,7 @@ public sealed class LoginCommandHandler(
 {
     public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await userReadRepository.GetByEmailAsync(request.Email);
+        var user = await userReadRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (user is null)
         {

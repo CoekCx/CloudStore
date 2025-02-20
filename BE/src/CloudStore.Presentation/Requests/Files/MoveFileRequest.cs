@@ -1,3 +1,3 @@
-namespace CloudStore.Presentation.DTOs.Requests.Files;
+namespace CloudStore.Presentation.Requests.Files;
 
 public sealed record MoveFileRequest(Guid NewParentDirectoryId);

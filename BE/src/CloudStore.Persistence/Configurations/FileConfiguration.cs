@@ -15,6 +15,15 @@ public sealed class FileConfiguration : IEntityTypeConfiguration<File>
 
         builder.HasKey(f => f.Id);
 
+        builder.Property(f => f.Id)
+            .HasConversion(EntityIdValueConverters.FileIdConverter);
+
+        builder.Property(f => f.DirectoryId)
+            .HasConversion(EntityIdValueConverters.DirectoryIdConverter);
+
+        builder.Property(f => f.OwnerId)
+            .HasConversion(EntityIdValueConverters.UserIdConverter);
+
         builder.Property(f => f.Name)
             .IsRequired()
             .HasMaxLength(255);
@@ -38,7 +47,7 @@ public sealed class FileConfiguration : IEntityTypeConfiguration<File>
         // Relationship with Directory
         builder.HasOne<Directory>()
             .WithMany(d => d.Files)
-            .HasForeignKey(f => f.ParentDirectoryId)
+            .HasForeignKey(f => f.DirectoryId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 

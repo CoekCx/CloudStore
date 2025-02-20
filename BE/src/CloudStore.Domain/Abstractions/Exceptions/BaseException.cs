@@ -1,6 +1,6 @@
 using CloudStore.Domain.Errors;
 
-namespace CloudStore.Domain.Abstractions.NewFolder;
+namespace CloudStore.Domain.Abstractions.Exceptions;
 
 public abstract class BaseException(string title, string message, Error? error = null) : Exception(message)
 {

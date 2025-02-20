@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using CloudStore.Domain.Abstractions.Exceptions;
 using CloudStore.Domain.Exceptions;
 
 namespace CloudStore.Presentation.Extensions;

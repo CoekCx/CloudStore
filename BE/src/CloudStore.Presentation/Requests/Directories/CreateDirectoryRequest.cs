@@ -1,4 +1,4 @@
-namespace CloudStore.Presentation.DTOs.Requests.Directories;
+namespace CloudStore.Presentation.Requests.Directories;
 
 public sealed record CreateDirectoryRequest(
     string Name,

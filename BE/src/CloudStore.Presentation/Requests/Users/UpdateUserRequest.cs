@@ -1,4 +1,4 @@
-namespace CloudStore.Presentation.DTOs.Requests.Users;
+namespace CloudStore.Presentation.Requests.Users;
 
 public sealed record UpdateUserRequest(
     string FirstName,

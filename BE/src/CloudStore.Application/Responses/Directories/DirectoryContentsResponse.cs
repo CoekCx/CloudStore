@@ -13,6 +13,6 @@ public sealed record DirectoryContentsResponse(
     {
         var subdirectories = directory.Subdirectories.Select(DirectoryResponse.FromDirectory).ToList();
         var files = directory.Files.Select(FileResponse.FromFile).ToList();
-        return new DirectoryContentsResponse(directory.Id, directory.Name, subdirectories, files);
+        return new DirectoryContentsResponse(directory.Id.Value, directory.Name, subdirectories, files);
     }
 }

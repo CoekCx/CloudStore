@@ -1,4 +1,5 @@
 using CloudStore.Domain.EntityIdentifiers;
+using CloudStore.Domain.Exceptions.Users;
 using CloudStore.Domain.Repositories;
 using CloudStore.Domain.Repositories.Users;
 using MediatR;
@@ -12,6 +13,11 @@ public class UpdateUserCommandHandler(
     public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await writeRepository.GetByIdAsync(new UserId(request.Id), cancellationToken);
+
+        if (user is null)
+        {
+            throw new UserNotFoundException(request.Id);
+        }
 
         user.Update(request.FirstName, request.LastName);
 

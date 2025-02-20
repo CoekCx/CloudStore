@@ -16,13 +16,13 @@ public sealed record FileResponse(
     public static FileResponse FromFile(File file)
     {
         return new FileResponse(
-            file.Id,
+            file.Id.Value,
             file.Name,
             file.Extension,
             file.Url,
             file.Size,
-            file.ParentDirectoryId,
-            file.OwnerId,
+            file.DirectoryId.Value,
+            file.OwnerId.Value,
             file.CreatedOnUtc,
             file.ModifiedOnUtc);
     }
