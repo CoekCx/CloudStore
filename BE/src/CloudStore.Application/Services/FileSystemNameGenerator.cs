@@ -1,18 +1,27 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Domain.EntityIdentifiers;
-using CloudStore.Domain.Repositories.Directories;
+using CloudStore.Domain.Repositories;
 
 namespace CloudStore.Application.Services;
 
-public class FileSystemNameGenerator(IDirectoryReadRepository directoryReadRepository) : IFileSystemNameGenerator
+public class FileSystemNameGenerator(IDirectoryRepository directoryRepository) : IFileSystemNameGenerator
 {
-    public async Task<string> GenerateUniqueDirectoryName(string desiredName, DirectoryId? parentId)
+    public async Task<string> GenerateUniqueDirectoryNameAsync(
+        string desiredName,
+        DirectoryId? parentId,
+        string currentName = "",
+        CancellationToken cancellationToken = default)
     {
         var newName = desiredName;
         var timesRenamed = 0;
 
-        while (await directoryReadRepository.ExistsAsync(newName, parentId))
+        while (await directoryRepository.ExistsAsync(newName, parentId, cancellationToken))
         {
+            if (!string.IsNullOrEmpty(currentName) && newName == currentName)
+            {
+                break;
+            }
+            
             if (++timesRenamed == 1)
             {
                 newName += $" ({timesRenamed})";
@@ -28,16 +37,22 @@ public class FileSystemNameGenerator(IDirectoryReadRepository directoryReadRepos
     public async Task<string> GenerateUniqueFileName(
         string desiredName,
         DirectoryId parentId,
+        string currentName = "",
         CancellationToken cancellationToken = default)
     {
         var newName = desiredName;
         var timesRenamed = 0;
-        var parentDirectory = await directoryReadRepository.GetByIdWithContentsAsync(parentId, cancellationToken);
+        var parentDirectory = await directoryRepository.GetByIdWithContentsAsync(parentId, cancellationToken);
 
         var fileNames = parentDirectory!.Files.Select(f => f.Name).ToList();
 
         while (fileNames.Contains(newName))
         {
+            if (!string.IsNullOrEmpty(currentName) && newName == currentName)
+            {
+                break;
+            }
+            
             if (++timesRenamed == 1)
             {
                 newName += $" ({timesRenamed})";

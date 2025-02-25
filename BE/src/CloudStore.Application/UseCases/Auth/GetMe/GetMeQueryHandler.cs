@@ -1,16 +1,16 @@
 using CloudStore.Application.Responses.Users;
 using CloudStore.Domain.EntityIdentifiers;
 using CloudStore.Domain.Exceptions.Users;
-using CloudStore.Domain.Repositories.Users;
+using CloudStore.Domain.Repositories;
 using MediatR;
 
 namespace CloudStore.Application.UseCases.Auth.GetMe;
 
-public sealed class GetMeQueryHandler(IUserReadRepository userReadRepository) : IRequestHandler<GetMeQuery, UserResponse>
+public sealed class GetMeQueryHandler(IUserRepository repository) : IRequestHandler<GetMeQuery, UserResponse>
 {
     public async Task<UserResponse> Handle(GetMeQuery request, CancellationToken cancellationToken)
     {
-        var user = await userReadRepository.GetByIdAsync(new UserId(request.UserId), cancellationToken);
+        var user = await repository.GetByIdAsync(new UserId(request.UserId), cancellationToken);
 
         if (user is null)
         {

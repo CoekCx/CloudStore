@@ -5,6 +5,7 @@ namespace CloudStore.Application.Responses.Directories;
 
 public sealed record DirectoryContentsResponse(
     Guid DirectoryId,
+    Guid OwnerId,
     string DirectoryName,
     IReadOnlyList<DirectoryResponse> Subdirectories,
     IReadOnlyList<FileResponse> Files)
@@ -13,6 +14,6 @@ public sealed record DirectoryContentsResponse(
     {
         var subdirectories = directory.Subdirectories.Select(DirectoryResponse.FromDirectory).ToList();
         var files = directory.Files.Select(FileResponse.FromFile).ToList();
-        return new DirectoryContentsResponse(directory.Id.Value, directory.Name, subdirectories, files);
+        return new DirectoryContentsResponse(directory.Id.Value, directory.OwnerId.Value, directory.Name, subdirectories, files);
     }
 }

@@ -1,14 +1,14 @@
 ﻿using System.Text.Json;
-using CloudStore.Persistence.Contexts;
+using CloudStore.Persistence;
 using CloudStore.Persistence.Outbox;
-using MassTransit;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
 
 namespace CloudStore.Infrastructure.Jobs;
 
 [DisallowConcurrentExecution]
-public class ProcessOutboxJob(ReadDbContext dbContext, IPublishEndpoint publishEndpoint) : IJob
+public class ProcessOutboxJob(ApplicationDbContext dbContext, IPublisher publisher) : IJob
 {
     public async Task Execute(IJobExecutionContext context)
     {
@@ -26,7 +26,7 @@ public class ProcessOutboxJob(ReadDbContext dbContext, IPublishEndpoint publishE
                 var type = typeof(Domain.AssemblyReference).Assembly.GetType(message.Type)!;
                 var deserializedEvent = JsonSerializer.Deserialize(message.Content, type)!;
 
-                await publishEndpoint.Publish(deserializedEvent, type, context.CancellationToken);
+                await publisher.Publish(deserializedEvent, context.CancellationToken);
 
                 message.ProcessedAt = DateTime.UtcNow;
             }

@@ -1,6 +1,8 @@
 using CloudStore.Domain.EntityIdentifiers;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+namespace CloudStore.Persistence.Converters;
+
 public static class EntityIdValueConverters
 {
     public static ValueConverter<DirectoryId, Guid> DirectoryIdConverter => new(
@@ -14,4 +16,4 @@ public static class EntityIdValueConverters
     public static ValueConverter<FileId, Guid> FileIdConverter => new(
         fileId => fileId.Value,
         value => new FileId(value));
-} 
+}

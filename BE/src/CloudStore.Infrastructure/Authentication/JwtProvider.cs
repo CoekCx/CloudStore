@@ -16,7 +16,7 @@ public class JwtProvider(IOptions<JwtOptions> jwtOptions) : ITokenGenerator
     {
         var claims = new Claim[]
         {
-            new(JwtRegisteredClaimNames.Sub, id.ToString()),
+            new(JwtRegisteredClaimNames.Sub, id.Value.ToString()),
             new(JwtRegisteredClaimNames.Email, email)
         };
 

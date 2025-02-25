@@ -23,4 +23,13 @@
         </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UseCases\Directories\Commands\" />
+      <Folder Include="UseCases\Directories\Queries\" />
+      <Folder Include="UseCases\Files\Commands\" />
+      <Folder Include="UseCases\Files\Queries\" />
+      <Folder Include="UseCases\Users\Commands\" />
+      <Folder Include="UseCases\Users\Queries\" />
+    </ItemGroup>
+
 </Project>

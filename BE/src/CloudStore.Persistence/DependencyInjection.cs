@@ -1,12 +1,13 @@
+using CloudStore.Application.UseCases.Directories.Queries.GetById;
+using CloudStore.Application.UseCases.Directories.Queries.GetContents;
+using CloudStore.Application.UseCases.Directories.Queries.GetRoot;
+using CloudStore.Application.UseCases.Users.Queries.GetAll;
+using CloudStore.Application.UseCases.Users.Queries.GetById;
 using CloudStore.Domain.Repositories;
-using CloudStore.Domain.Repositories.Directories;
-using CloudStore.Domain.Repositories.Files;
-using CloudStore.Domain.Repositories.Users;
-using CloudStore.Persistence.Contexts;
+using CloudStore.Persistence.DataRequests.Directories;
+using CloudStore.Persistence.DataRequests.Users;
 using CloudStore.Persistence.Interceptors;
-using CloudStore.Persistence.Repositories.Directories;
-using CloudStore.Persistence.Repositories.Files;
-using CloudStore.Persistence.Repositories.Users;
+using CloudStore.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,25 +21,22 @@ public static class DependencyInjection
         services.AddSingleton<ConvertDomainEventsToMessagesInterceptor>();
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
         
-        services.AddDbContext<WriteDbContext>((serviceProvider, options) =>
+        services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
             options.UseNpgsql(configuration.GetConnectionString("Postgres"))
                 .AddInterceptors(
                     serviceProvider.GetRequiredService<ConvertDomainEventsToMessagesInterceptor>(),
                     serviceProvider.GetRequiredService<UpdateAuditableEntitiesInterceptor>()));
 
-        services.AddDbContext<ReadDbContext>((serviceProvider, options) =>
-            options.UseNpgsql(configuration.GetConnectionString("Postgres"))
-                .AddInterceptors(
-                    serviceProvider.GetRequiredService<ConvertDomainEventsToMessagesInterceptor>(),
-                    serviceProvider.GetRequiredService<UpdateAuditableEntitiesInterceptor>()));
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IDirectoryRepository, DirectoryRepository>();
+        services.AddScoped<IFileRepository, FileRepository>();
 
-        services.AddScoped<IUserReadRepository, UserReadRepository>();
-        services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-        services.AddScoped<IDirectoryReadRepository, DirectoryReadRepository>();
-        services.AddScoped<IDirectoryWriteRepository, DirectoryWriteRepository>();
-        services.AddScoped<IFileReadRepository, FileReadRepository>();
-        services.AddScoped<IFileWriteRepository, FileWriteRepository>();
-
+        services.AddScoped<IGetAllUsersDataRequest, GetAllUsersDataRequest>();
+        services.AddScoped<IGetUserByIdDataRequest, GetUserByIdDataRequest>();
+        services.AddScoped<IGetDirectoryByIdDataRequest, GetDirectoryByIdDataRequest>();
+        services.AddScoped<IGetDirectoryContentsDataRequest, GetDirectoryContentsDataRequest>();
+        services.AddScoped<IGetRootDirectoryDataRequest, GetRootDirectoryDataRequest>();
+        
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;

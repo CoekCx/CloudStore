@@ -1,5 +1,6 @@
 using CloudStore.Domain.Entities;
 using CloudStore.Persistence.Constants;
+using CloudStore.Persistence.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

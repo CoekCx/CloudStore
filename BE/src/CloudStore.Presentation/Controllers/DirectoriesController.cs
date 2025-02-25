@@ -1,11 +1,11 @@
 using CloudStore.Application.Responses.Directories;
-using CloudStore.Application.UseCases.Directories.Create;
-using CloudStore.Application.UseCases.Directories.Delete;
-using CloudStore.Application.UseCases.Directories.GetById;
-using CloudStore.Application.UseCases.Directories.GetContents;
-using CloudStore.Application.UseCases.Directories.GetRoot;
-using CloudStore.Application.UseCases.Directories.Move;
-using CloudStore.Application.UseCases.Directories.Update;
+using CloudStore.Application.UseCases.Directories.Commands.Create;
+using CloudStore.Application.UseCases.Directories.Commands.Delete;
+using CloudStore.Application.UseCases.Directories.Commands.Move;
+using CloudStore.Application.UseCases.Directories.Commands.Update;
+using CloudStore.Application.UseCases.Directories.Queries.GetById;
+using CloudStore.Application.UseCases.Directories.Queries.GetContents;
+using CloudStore.Application.UseCases.Directories.Queries.GetRoot;
 using CloudStore.Presentation.Extensions;
 using CloudStore.Presentation.Requests.Directories;
 using MediatR;
@@ -93,8 +93,8 @@ public class DirectoriesController(IMediator sender) : ControllerBase
         var userId = HttpContext.User.GetUserIdentityId();
 
         var command = new UpdateDirectoryCommand(id, userId, request.Name);
-        await sender.Send(command, cancellationToken);
-        return NoContent();
+        var result = await sender.Send(command, cancellationToken);
+        return Ok(result);
     }
 
     [HttpPut("{id:guid}/move")]

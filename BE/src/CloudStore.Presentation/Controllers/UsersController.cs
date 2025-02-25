@@ -1,9 +1,9 @@
 using CloudStore.Application.Responses.Users;
-using CloudStore.Application.UseCases.Users.Create;
-using CloudStore.Application.UseCases.Users.Delete;
-using CloudStore.Application.UseCases.Users.GetAll;
-using CloudStore.Application.UseCases.Users.GetById;
-using CloudStore.Application.UseCases.Users.Update;
+using CloudStore.Application.UseCases.Users.Commands.Create;
+using CloudStore.Application.UseCases.Users.Commands.Delete;
+using CloudStore.Application.UseCases.Users.Commands.Update;
+using CloudStore.Application.UseCases.Users.Queries.GetAll;
+using CloudStore.Application.UseCases.Users.Queries.GetById;
 using CloudStore.Presentation.Requests.Users;
 using MediatR;
 using Microsoft.AspNetCore.Http;

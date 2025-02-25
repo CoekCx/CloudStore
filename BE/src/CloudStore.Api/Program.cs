@@ -1,14 +1,9 @@
 using CloudStore.Application;
 using CloudStore.Infrastructure;
 using CloudStore.Persistence;
-using CloudStore.Persistence.Contexts;
-using CloudStore.Persistence.Interceptors;
 using CloudStore.Presentation;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var services = builder.Services;
 
 var configuration = builder.Configuration;
 

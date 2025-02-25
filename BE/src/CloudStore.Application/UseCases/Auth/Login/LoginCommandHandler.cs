@@ -1,18 +1,18 @@
 using CloudStore.Application.Abstractions;
 using CloudStore.Domain.Exceptions.Users;
-using CloudStore.Domain.Repositories.Users;
+using CloudStore.Domain.Repositories;
 using MediatR;
 
 namespace CloudStore.Application.UseCases.Auth.Login;
 
 public sealed class LoginCommandHandler(
-    IUserReadRepository userReadRepository,
+    IUserRepository repository,
     IPasswordHasher passwordHasher,
     ITokenGenerator tokenGenerator) : IRequestHandler<LoginCommand, string>
 {
     public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await userReadRepository.GetByEmailAsync(request.Email, cancellationToken);
+        var user = await repository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (user is null)
         {

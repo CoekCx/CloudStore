@@ -8,5 +8,5 @@ public static class RuleBuilderExtensions
 
     public static IRuleBuilderOptions<T, string> MustHaveValidFileName<T>(this IRuleBuilder<T, string> ruleBuilder) =>
         ruleBuilder
-            .Must(name => name.Any(c => InvalidFileNameChars.Contains(c)));
+            .Must(name => name.Any(c => !InvalidFileNameChars.Contains(c)));
 } 
